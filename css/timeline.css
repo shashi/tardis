@@ -1,0 +1,218 @@
+body {
+	font-family: Coustard, Georgia, Verdana;
+    background: -webkit-gradient(radial, center center, 0, center center, 400,
+                               from(rgb(254, 254, 254)),
+                               to(rgb(239, 239, 239)));
+	font-size: 87.5%;
+	position: relative;
+	color: #222;
+}
+
+.point {
+	font-size: 1em;
+}
+
+#timeline {
+	position: relative;
+	font-family: Podkova;
+	height:100%;
+	width: 100%;
+	color: #999999;
+}
+
+#page-wrap {
+    position: relative;
+    height: 600px;
+    width: 100%;
+}
+
+.grid {
+    height: 480px;
+    width: 960px;
+}
+
+#page {
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.handwritten {
+	font-family: 'Gochi Hand';
+}
+
+em {
+	font-family: 'Gochi Hand';
+    font-size: 1.2em;
+}
+
+#timeline-labels {
+	margin-top: 25px;
+	font-size: 35px;
+}
+
+#timeline-wrap {
+	box-shadow: 0 0 8pt #000;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 120px;
+    min-height: 50px;
+    max-height: 14%;
+	background-color: #222;
+	width: 100%;
+}
+#footer {
+    margin: 0 auto;
+    position: fixed;
+    width: 100%;
+    bottom: 70px;
+    text-align: center;
+    opacity: 0;
+}
+
+.timeline-point-label {
+	position: absolute;
+	margin-left: -35px;
+}
+
+.timeline-point-label a {
+    text-decoration: none;
+    color: #999999;
+}
+
+.timeline-point-label.current, .timeline-point-label.current a {
+	color: #fff;
+	text-shadow: #000 0px 0px 20px;
+}
+
+.timeline-point-line {
+	margin-top: 40px;
+	border-bottom: 1px #999999 solid;
+	border-right: 1px #BBBBBB solid;
+	height: 14px;
+	position: absolute;
+}
+
+#thickbox {
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    right: 20%;
+    left: 20%;
+    height: 80%;
+    width: 60%;
+    display: none;
+    background: white;
+    border-radius: 12px;
+    font-size: 2em;
+    overflow: auto;
+    padding: 40px 60px;
+    box-shadow: #000 0px 0px 40px;
+}
+
+h3 {
+    font-weight: none;
+    font-family: Podkova;
+}
+
+.grid {
+    position: relative;
+}
+
+.box {
+    position: absolute; /* relative to the grid */
+}
+#page-inner {
+    height: 480px;
+    position: relative;
+    width: 99999999px;
+}
+
+.subpage, .filler_leaf {
+    display: inline;
+    height: 600px;
+    width: 960px;
+    position: relative;
+    float: left;
+}
+
+#seeker {
+    width: 100%;
+    position: absolute;
+    margin-top: -50px;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+.carousel-dot {
+    color: #999;
+    font-weight: bold;
+    text-decoration: none;
+    padding:0 10px;
+    cursor: pointer;
+}
+
+.carousel-dot.current {
+    color: #333;
+	text-shadow: #000 0px 0px 5px;
+}
+#prev-page {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    text-align: left;
+    font-size: 5em;
+    width: 100px;
+    height: 160px;
+    margin: 160px auto;
+    float: left;
+    color: #aaa;
+    cursor: pointer;
+    opacity: 0;
+}
+#next-page {
+    position: absolute;
+    text-align: right;
+    right: 10px;
+    top: 0;
+    color: #999;
+    font-size: 8em;
+    width: 100px;
+    height: 160px;
+    margin: 160px auto;
+    float: left;
+    cursor: pointer;
+    opacity: 0;
+}
+
+#next-page:hover {
+    color: #888;
+}
+#next-page:active {
+    color: #777;
+}
+#prev-page:hover {
+    color: #999;
+}
+#prev-page:active {
+    color: #888;
+}
+.text-shadow {
+}
+
+
+#footer .page-date {
+    font-family: Georgia, garamond, 'Podkova';
+    font-size: 21pt;
+}
+#footer h2 {
+    font-family: Georgia, garamond, 'Podkova';
+    font-size: 26pt;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.box {
+    background-repeat: no-repeat;
+}

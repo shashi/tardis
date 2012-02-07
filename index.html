@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <title>Down the memory lane</title>
+  <link rel="stylesheet" href="css/timeline.css" type="text/css">
+  <link rel="stylesheet" href="css/grid_system.css" type="text/css">
+
+  <script src="js/zepto/dist/zepto.min.js" language="javascript"></script>
+  <script src="js/timeline.js" language="javascript"></script>
+</head>
+
+<body>
+<div id="wrap">
+    <div class="grid-wrap" id="page-wrap">
+        <div id="prev-page">&laquo;</div>
+        <div id="page" class="grid">
+            <div id="page-inner"></div>
+        </div>
+        <div id="next-page">&raquo;</div>
+    </div>
+    <div id="timeline-wrap">
+        <div id="seeker"></div>
+        <div id="timeline">
+            <div id="timeline-labels"></div>
+            <div id="timeline-lines"></div>
+        </div>
+    </div>
+
+    <div id="footer">
+    </div>
+</div>
+
+
+<script language="javascript" type="text/javascript">
+  (function ($) {
+
+    // adjust vertical positioning
+    function adjustPagePosition() {
+        var available = $('#timeline').offset().top;
+        if (available>490) {
+            $('#page-wrap').css('margin-top', available / 2 - 250);
+        }
+    }
+
+    $(window).live('resize', adjustPagePosition);
+    adjustPagePosition();
+
+    document.loadTimeline();
+    if (window.location.hash == '') {
+        window.location.hash = '#home/1';
+    } else {
+        document.loadHashUrl(window.location.hash);
+    }
+  })(Zepto);
+</script>
+</body>
+
+</html>
