@@ -8,6 +8,9 @@ NITK Down the memory lane
 
 Things to make
 ==============
-* the grid system
-* the carousel
-* interface for putting captions for images
+- the grid system
+- the carousel
++ interface for putting captions for images
++ ^ image sorting and metadata
++ thumbnail generator script
++ georgia or garamond h2
