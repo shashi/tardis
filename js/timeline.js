@@ -161,6 +161,14 @@
         $('#timeline-wrap').anim({'bottom': -100});
         $('#timeline').anim({opacity: 0.1});
 
+        // adjust footer position
+        try {
+            var t = $('#timeline-wrap').offset().top - $('#footer').offset().top;
+            if (t > 50) {
+               $('#footer').css('margin-top', (t - 50) / 2);
+            }
+        } catch (e) {}
+
         $('#footer').anim({opacity: 1}, 0.3);
         
     }

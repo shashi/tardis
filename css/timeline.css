@@ -22,7 +22,7 @@ body {
 
 #page-wrap {
     position: relative;
-    height: 600px;
+    height: 480px;
     width: 100%;
 }
 
@@ -57,16 +57,13 @@ em {
 	bottom: 0;
 	left: 0;
 	height: 120px;
-    min-height: 50px;
-    max-height: 14%;
 	background-color: #222;
 	width: 100%;
 }
 #footer {
     margin: 0 auto;
-    position: fixed;
     width: 100%;
-    bottom: 70px;
+    height: 90px;
     text-align: center;
     opacity: 0;
 }
@@ -131,7 +128,7 @@ h3 {
 
 .subpage, .filler_leaf {
     display: inline;
-    height: 600px;
+    height: 480px;
     width: 960px;
     position: relative;
     float: left;
@@ -140,9 +137,9 @@ h3 {
 #seeker {
     width: 100%;
     position: absolute;
-    margin-top: -50px;
+    margin-top: -40px;
     text-align: center;
-    font-size: 2.5em;
+    font-size: 35px;
 }
 
 .carousel-dot {

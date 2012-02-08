@@ -40,6 +40,9 @@
         if (available>490) {
             $('#page-wrap').css('margin-top', available / 2 - 250);
         }
+        var t = $('#page').offset(), n = $('#timeline-wrap').offset()['top'];
+        console.log(n, t['top'], t.height - 100);
+        $('#footer').css('bottom', n - t['top'] - t.height);
     }
 
     $(window).live('resize', adjustPagePosition);
