@@ -10,7 +10,11 @@ Things to make
 ==============
 - the grid system
 - the carousel
-+ interface for putting captions for images
-+ ^ image sorting and metadata
-+ thumbnail generator script
+- interface for putting captions for images
+- ^ image sorting and metadata
+- thumbnail generator script
 + georgia or garamond h2
++ start authoring
++ refractor javascript
++ pagination in thickbox
++ draggable timeline
