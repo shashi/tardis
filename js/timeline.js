@@ -121,35 +121,40 @@
         return null;
     }
 
-    function showBigPic(thumb) {
+    function showBigPic(thumb, back) {
         var pic = getPic(thumb, currentPage.pics);
         console.log(pic);
 
         var width = pic.original[1], height = pic.original[2],
             slug = $('#page').data('loaded');
 
-        loadCaptions(slug);
-
-        if (width > 680) {
-            width = 680;
-            height = 'auto';
+        function loadCap(thumb) {
+            try {
+                $('.thickbox .thickbox-text').empty()
+                    .html(currentPage.captions[slug][thumb]);
+            } catch(e) {}
         }
 
-        if (height > 580) {
-            height = 580;
-            width  = 'auto';
-        }
+        loadCaptions(slug, function () { loadCap(thumb); });
 
         var img = $('<img>').addClass('original')
                 .attr('src', pic.original[0])
-                .attr('width', width)
-                .attr('height', height)
         $('.cover .thickbox-center').empty().append(img);
-        $('.cover').show().css('opacity', 0).anim({opacity:1});
+        $('.cover').show().anim({opacity:1});
 
-        try {
-            $('.thickbox .thickbox-text').empty().html(currentPage.captions[slug][thumb]);
-        } catch(e) {}
+        if (typeof(back) == 'string') {
+            $('.cover').data('back', back);
+        }
+    }
+
+    function hideCover() {
+        if ($('.cover').css('display') == 'none') return;
+
+        $('.cover').anim({opacity: 0}, 0.4, 'ease', function () {
+            $(this).hide();
+        });
+
+        window.location.hash = $('#page').data('loaded') + '/' + currentLeaf;
     }
 
     function loadLeaf(id, noanim) {
@@ -232,15 +237,17 @@
                 setTimeout(hideTimeline, 5000);
             },
             error: function () {
-                alert('Fail happened while loading #' +slug);
+                alert('Fail happened while loading timeline');
             }
         });
     }
 
-    function loadCaptions (slug) {
+    function loadCaptions (slug, callback) {
 
-        if (typeof(currentPage.captions[slug]) == 'object')
+        if (typeof(currentPage.captions[slug]) == 'object') {
+            callback();
             return currentPage.captions[slug];
+        }
 
         $.ajax({
             type: 'GET',
@@ -248,6 +255,7 @@
             dataType: 'json',
             success: function(data) {
                 currentPage.captions[slug] = data;
+                callback();
             },
             error: function () {
                 console.log('No captions for images in ' + slug);
@@ -346,8 +354,10 @@
 
     }
 
-    function loadHashUrl() {
-        var url = window.location.hash.substr(1).split('/');
+    function loadHashUrl(newUrl, oldUrl) {
+        var url = (typeof(newUrl) == 'undefined')
+                ? window.location.hash : '#' + newUrl.split('#')[1];
+        url = url.substr(1).split('/');
 
         if (url.length < 2) {
             url.push('1')
@@ -368,13 +378,16 @@
             }
 
             return;
+        } else {
+            hideCover();
         }
 
         loadPage(url[0], url[1]);
     }
 
     $(window).bind('hashchange', function (e) {
-        loadHashUrl();
+        console.log(e);
+        loadHashUrl(e.newURL, e.oldURL);
         return false;
     });
 
@@ -408,8 +421,28 @@
             window.location.hash = '#' +slug 
                     + '/pic:' + $(this).attr('src').replace('thumbnails/', '');
         });
+        $('.thickbox-close').live('click tap', function () {
+            hideCover();
+        });
 
-        $('body').keydown(function (e) {
+        $(window).keydown(function (e) {
+
+            if ($('.cover').css('display') == 'block') {
+                switch(e.which) {
+                case 27:
+                    // escape
+                    hideCover();
+                    break;
+                case 37:
+                    // prev image
+                    break;
+                case 39:
+                    // next image
+                    break;
+                }
+                return;
+            }
+
             switch(e.which) {
             case 37:
                 prevLeaf();

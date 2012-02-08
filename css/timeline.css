@@ -228,13 +228,14 @@ h3 {
     bottom: 0;
     left: 0;
     right: 0;
-    background: white;
     z-index: 999999999;
 }
 
 .thickbox {
     margin: 5% auto;
+    background: white;
     display: table;
+    position: relative;
 	box-shadow: 0 0 8pt #000;
     border-radius: 6px;
     min-width: 700px;
@@ -257,8 +258,33 @@ h3 {
 .thickbox-text {
     height: 40px;
     padding: 5px;
+    font-size: 1.2em;
     text-align: center;
     vertical-align: middle;
     width: 100%;
     display: table-row;
+}
+
+.thickbox .original {
+    max-height: 600px;
+    max-width: 700px;
+}
+
+.thickbox-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    border-radius:20px;
+    font-family: arial, sans-serif;
+    width: 20px;
+    font-size: 16px;
+    height: 20px;
+    text-align: center;
+    background: #aaa;
+    border: 4px #888 solid;
+    color: white;
+    cursor: pointer;
+}
+.thickbox-close:hover {
+	box-shadow: 0 0 8px #000;
 }
