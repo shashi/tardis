@@ -10,6 +10,7 @@ import time
 import yaml
 import json
 from textile import textile
+from PIL import Image
 
 GRID_COLUMN_WIDTH = 60
 GRID_ROW_HEIGHT   = 60
@@ -37,6 +38,92 @@ def box_div(dimensions, style):
 
     s = '<div class="box" style="padding:5px; left:%dpx; top: %dpx; width: %dpx; height: %dpx;%s">'
     return s % (x, y, width-10, height-10, style)
+
+def isInt(i):
+    try:
+        int(i)
+        return True
+    except:
+        return False
+
+def thumbnail(spec):
+
+    splitter = re.compile('\s+')
+    s = splitter.split(spec.strip())
+    img = s[0]
+    w = 'auto'
+    h = 'auto'
+    if (len(s) == 3):
+        w,h = s[1:]
+    if (len(s) == 2):
+        w = s[1]
+        h = 'auto'
+
+    # do the resizing
+
+    full_scale = Image.open('pictures/' + img)
+
+    o_w, o_h = full_scale.size
+    if w == 'auto' and isInt(h):
+        w = int(int(h) * o_w / o_h);
+    if h == 'auto' and isInt(w):
+        h = int(int(w) * o_h / o_w);
+    if h == 'auto' and w == 'auto':
+        # bone-head-ness
+        return '<img class="thumb" "width="%s" height="%s" src="pictures/%s">' %(w,h,img)
+
+    w, h = int(w), int(h)
+
+    print "    resizing %s to (%sx%s)" % (img, w, h)
+
+    try:
+        os.makedirs('thumbnails/'+'/'.join(img.split('/')[:-1]))
+    except:
+        pass
+
+    parts = img.split('.')
+    thumb_name = 'thumbnails/' + '.'.join(parts[:-1])+'_%d_%d.' % (w, h)+parts[-1]
+
+    thumb_file = open(thumb_name, 'w')
+                # resample and resize
+    thumb_data = full_scale.resize((w, h), 1)
+    thumb_data.save(thumb_file)
+    w, h = str(w), str(h)
+
+    return '<img class="thumb" "width="%s" height="%s" src="%s">' % (w,h,thumb_name)
+
+def thumbs(p):
+    thumbs_re = re.compile('^\s*thumbnails\(\s*$')
+    # each line will contain the path to the image
+    # and optionally dimensions width, height
+
+    lines = p.split('\n')
+    new_lines = []
+
+    scan_thumbs = False
+
+    imgs = ''
+    for l in lines:
+        matches = thumbs_re.match(l)
+        if matches != None:
+            scan_thumbs = True
+            continue
+        elif l.strip() == ')':
+            if len(imgs) > 0:
+                new_lines.append(imgs)
+            scan_thumbs = False
+            continue
+
+        if scan_thumbs:
+            k = l.strip()
+            if k != '':
+                imgs += thumbnail(l)
+            else:
+                imgs += '<br style="clear:both">'
+        else:
+            new_lines.append(l)
+    return '\n'.join(new_lines)
+
 
 def boxes(p):
     box_re = re.compile('^\s*box\(([^\)]+)\)\s*(.*)\s*$')
@@ -103,7 +190,7 @@ def parse(text):
     i = 1
     for p in subpages:
         html += '<div class="subpage" id="leaf-%d">' % i
-        html += textile(boxes(p), 1, 'html')
+        html += textile(boxes(thumbs(p)), 1, 'html')
         html += '</div>'
         i += 1
     return html
@@ -151,7 +238,6 @@ print '\n'.join(pg)
 pages = []
 
 for fn in pg:
-    print process_page(fn)
     pages.append(process_page(fn))
 i=0
 cnt = len(pages)
@@ -179,4 +265,5 @@ t_file = open('timeline.json', 'w')
 json.dump(timeline, t_file)
 t_file.close()
 
-print pages
+
+print 'Done compiling.'

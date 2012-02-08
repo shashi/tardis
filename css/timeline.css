@@ -213,3 +213,11 @@ h3 {
 .box {
     background-repeat: no-repeat;
 }
+
+.thumb {
+    padding: 3px;
+    float: left;
+    display: block;
+    cursor: pointer;
+}
+
