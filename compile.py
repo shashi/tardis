@@ -70,7 +70,7 @@ def thumbnail(spec):
         h = int(int(w) * o_h / o_w);
     if h == 'auto' and w == 'auto':
         # bone-head-ness
-        return '<img class="thumb" "width="%s" height="%s" src="pictures/%s">' %(w,h,img)
+        raise "both height and width cannot be auto in thumbnail"
 
     w, h = int(w), int(h)
 
@@ -90,7 +90,9 @@ def thumbnail(spec):
     thumb_data.save(thumb_file)
     w, h = str(w), str(h)
 
-    return '<img class="thumb" "width="%s" height="%s" src="%s">' % (w,h,thumb_name)
+    pic = {'thumb': [thumb_name, w, h], 'original': ['pictures/' + img, o_w, o_h]}
+
+    return '<img class="thumb" "width="%s" height="%s" src="%s">' % (w,h,thumb_name), pic
 
 def thumbs(p):
     thumbs_re = re.compile('^\s*thumbnails\(\s*$')
@@ -101,6 +103,8 @@ def thumbs(p):
     new_lines = []
 
     scan_thumbs = False
+
+    images = []
 
     imgs = ''
     for l in lines:
@@ -117,12 +121,14 @@ def thumbs(p):
         if scan_thumbs:
             k = l.strip()
             if k != '':
-                imgs += thumbnail(l)
+                markup, pic = thumbnail(l)
+                images.append(pic)
+                imgs += markup
             else:
                 imgs += '<br style="clear:both">'
         else:
             new_lines.append(l)
-    return '\n'.join(new_lines)
+    return '\n'.join(new_lines), images
 
 
 def boxes(p):
@@ -188,12 +194,15 @@ def parse(text):
 
     html = ''
     i = 1
+    images = []
     for p in subpages:
         html += '<div class="subpage" id="leaf-%d">' % i
-        html += textile(boxes(thumbs(p)), 1, 'html')
+        txt, pics = thumbs(p)
+        html += textile(boxes(txt), 1, 'html')
         html += '</div>'
         i += 1
-    return html
+        images += pics
+    return html, images
 
 def process_page(fn):
     page = {}
@@ -205,7 +214,7 @@ def process_page(fn):
         meta = yaml.load(parts[0])
         for key, default in [('title', ''), ('from', ''), ('to',''),
                              ('next', None), ('prev', None), ('timeline', True),
-                             ('timeline_title', '')]:
+                             ('timeline_title', ''), ('pics', [])]:
             if meta.has_key(key):
                 page[key] = meta[key]
             else: page[key] = default
@@ -221,7 +230,7 @@ def process_page(fn):
             pass
 
         text = parts[1]
-        page['html'] = parse(text)
+        page['html'], page['pics'] = parse(text)
         return page
     except IndexError:
         print "Meta data not formatted correctly?"
@@ -257,13 +266,14 @@ for p in pages:
     i += 1
 
 for p in pages:
-    p_file = open('pages/%s.json' % p['slug'], 'w')
+    fn = 'pages/%s.json' % p['slug']
+    p_file = open(fn, 'w')
+        
     json.dump(p, p_file)
     p_file.close()
 
 t_file = open('timeline.json', 'w')
 json.dump(timeline, t_file)
 t_file.close()
-
 
 print 'Done compiling.'

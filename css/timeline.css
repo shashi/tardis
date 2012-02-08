@@ -221,3 +221,44 @@ h3 {
     cursor: pointer;
 }
 
+.cover {
+    position: fixed;
+    display: none;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    z-index: 999999999;
+}
+
+.thickbox {
+    margin: 5% auto;
+    display: table;
+	box-shadow: 0 0 8pt #000;
+    border-radius: 6px;
+    min-width: 700px;
+    width: 700px;
+    padding: 20px;
+    overflow: auto;
+    min-height: 600px;
+    height: 600px;
+}
+
+.thickbox-center {
+    height: 80%;
+    width: 100%;
+    display:table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18pt;
+}
+
+.thickbox-text {
+    height: 40px;
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    display: table-row;
+}

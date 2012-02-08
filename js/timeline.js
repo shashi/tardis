@@ -3,6 +3,7 @@
 
     var currentLeaf = 1,
         startYear = 999999999,
+        currentPage = {'pics': [], 'captions': {}}
         yearSpacing = 300,
         currentPos = 0,
         timelineScale = 1;
@@ -94,10 +95,12 @@
                 success: function(data) {
                     console.log(data);
                 // TODO: invent events triggered by changing attributes
+                    console.log(data.pics)
                     $('#page').data('loaded', slug)
                               .data('date', data.from)
                               .data('next', data.next)
                               .data('prev', data.prev);
+                    currentPage.pics = data.pics;
                     render(data);
                     if (typeof(leaf) != 'undefined') {
                         if (leaf == 'last') loadLeaf($('#page .subpage').length);
@@ -109,6 +112,44 @@
                     alert('Fail happened while loading #' +slug);
                 }
             });
+    }
+
+    function getPic(thumb, pics) {
+        for (p in pics) {
+            if (pics[p].thumb[0] == thumb) return pics[p]
+        }
+        return null;
+    }
+
+    function showBigPic(thumb) {
+        var pic = getPic(thumb, currentPage.pics);
+        console.log(pic);
+
+        var width = pic.original[1], height = pic.original[2],
+            slug = $('#page').data('loaded');
+
+        loadCaptions(slug);
+
+        if (width > 680) {
+            width = 680;
+            height = 'auto';
+        }
+
+        if (height > 580) {
+            height = 580;
+            width  = 'auto';
+        }
+
+        var img = $('<img>').addClass('original')
+                .attr('src', pic.original[0])
+                .attr('width', width)
+                .attr('height', height)
+        $('.cover .thickbox-center').empty().append(img);
+        $('.cover').show().css('opacity', 0).anim({opacity:1});
+
+        try {
+            $('.thickbox .thickbox-text').empty().html(currentPage.captions[slug][thumb]);
+        } catch(e) {}
     }
 
     function loadLeaf(id, noanim) {
@@ -192,6 +233,24 @@
             },
             error: function () {
                 alert('Fail happened while loading #' +slug);
+            }
+        });
+    }
+
+    function loadCaptions (slug) {
+
+        if (typeof(currentPage.captions[slug]) == 'object')
+            return currentPage.captions[slug];
+
+        $.ajax({
+            type: 'GET',
+            url : 'pictures/captions/' + slug + '.json',
+            dataType: 'json',
+            success: function(data) {
+                currentPage.captions[slug] = data;
+            },
+            error: function () {
+                console.log('No captions for images in ' + slug);
             }
         });
     }
@@ -294,6 +353,23 @@
             url.push('1')
         }
 
+        if (url[1].substr(0, 4) == 'pic:') {
+
+            function loadPic() {
+                var thumb = window.location.hash.substr(1).split('pic:')[1];
+                showBigPic('thumbnails/' + thumb);
+            }
+
+            if ($('#page').data('loaded') == url[0]) {
+                loadPic();
+            } else {
+                loadPage(url[0]);
+                setTimeout(loadPic, 500);
+            }
+
+            return;
+        }
+
         loadPage(url[0], url[1]);
     }
 
@@ -326,6 +402,11 @@
 
         $('#prev-page').bind('click tap', function() {
             prevLeaf();
+        });
+        $('img.thumb').live('click tap', function () {
+            var slug = $('#page').data('loaded');
+            window.location.hash = '#' +slug 
+                    + '/pic:' + $(this).attr('src').replace('thumbnails/', '');
         });
 
         $('body').keydown(function (e) {
