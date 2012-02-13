@@ -34,6 +34,10 @@
             $('#seeker').append(dot);
         }
 
+        if (shouldHideTimeline()) {
+            $('#footer').css('opacity', 0);
+        }
+
     }
 
     function nextLeaf() {
@@ -45,10 +49,10 @@
             var next = $('#page').data('next');
             console.log(next);
             if (typeof(next) == 'string' && next != 'null' && next != '') {
-                $('#page-inner').anim({opacity:0},.4,'ease-out', function () {
+                $('#page-inner,#footer').anim({opacity:0},.4,'ease-out', function () {
                     $('#page-inner').css('left', 0);
                     window.location.hash = '#' + next + '/1';
-                    $('#page-inner').anim({opacity:1},.4,'ease-in');
+                    $('#page-inner,#footer').anim({opacity:1},.4,'ease-in');
                 });
             }
         }
@@ -62,10 +66,10 @@
             // go to previous page
             var prev = $('#page').data('prev');
             if (typeof(prev) == 'string' && prev != 'null' && prev != '') {
-                $('#page-inner').anim({opacity:0},.4,'ease-out', function () {
+                $('#page-inner, #footer').anim({opacity:0},.4,'ease-out', function () {
                     $('#page-inner').css('left', 0);
                     window.location.hash = '#' + prev + '/1';
-                    $('#page-inner').anim({opacity:1},.4,'ease-in');
+                    $('#page-inner,#footer').anim({opacity:1},.4,'ease-in');
                 });
             }
         }
@@ -104,6 +108,7 @@
                               .data('next', data.next)
                               .data('prev', data.prev);
                     currentPage.pics = data.pics;
+                    currentPage.timeline = data.timeline;
                     render(data);
                     if (typeof(leaf) != 'undefined') {
                         if (leaf == 'last') loadLeaf($('#page .subpage').length);
@@ -161,7 +166,7 @@
     }
 
     function loadLeaf(id, noanim) {
-        var new_left = -960 * (id-1);
+        var new_left = -900 * (id-1);
         if (id > $('#page-inner .subpage').length) {
             console.log('Beyond available slides');
             return;
@@ -206,13 +211,20 @@
         }
     }
 
-    function hideTimeline(id, params) {
-        $('#timeline-wrap').anim({'bottom': -100});
-        $('#timeline').anim({opacity: 0.1});
+    function shouldHideTimeline()
+    {
+        return $('#timeline-wrap').offset()['top'] - $('#footer').offset()['top']- $('#footer').offset().height < 0;
+    }
+
+    function hideTimeline(cb) {
+        $('#timeline-wrap').anim({'bottom': -90});
+        $('#timeline').anim({opacity: 0.1}, 0.3, 'ease', cb);
 
         // adjust footer position
         try {
-            var t = $('#timeline-wrap').offset().top - $('#footer').offset().top;
+            var t_o = $('#timeline-wrap').offset();
+            alert(t_o.bottom);
+            var t = t_o.top + -1*t_o.bottom + $('#footer').offset().top;
             if (t > 50) {
                $('#footer').css('margin-top', (t - 50) / 2);
             }
@@ -222,13 +234,12 @@
         
     }
 
-    function showTimeline(id, params) {
-        $('#timeline-wrap').anim({'bottom': 0});
+    function showTimeline(cb) {
+        $('#timeline-wrap').anim({'bottom': 0}, 0.3, 'ease', cb);
         $('#timeline').anim({opacity: 1});
-        $('#footer').anim({opacity: 0})
     }
 
-    function loadTimeline() {
+    function loadTimeline(cb) {
         $.ajax({
             type: 'GET',
             url : 'timeline.json',
@@ -236,11 +247,15 @@
             success: function(data) {
                 timelineData(data);
 
+                cb();
                 showTimeline();
-                setTimeout(hideTimeline, 5000);
+                if (shouldHideTimeline()) {
+                    setTimeout(hideTimeline, 2000);
+                }
             },
             error: function () {
-                alert('Fail happened while loading timeline');
+                console.log('[ERROR] Fail happened while loading timeline');
+                cb();
             }
         });
     }
@@ -256,6 +271,7 @@
             type: 'GET',
             url : 'pictures/captions/' + slug + '.json',
             dataType: 'json',
+            data: {'random': Math.random()},
             success: function(data) {
                 currentPage.captions[slug] = data;
                 callback();
@@ -316,11 +332,17 @@
         if (typeof(date) == 'number' || typeof(date) == 'string') {
             if ($('#timeline').data('current-year') == date) return;
             clearInterval(wait_id);
-            showTimeline();
+            if (currentPage.timeline) {
+                showTimeline();
+            } else {
+                hideTimeline();
+            }
             $('#timeline').anim({left: -1*(date - startYear) * yearSpacing}, 1, 'ease');
             $('#timeline').data('current-year', date);
             console.log(date-startYear);
-            wait_id = setTimeout(hideTimeline, 5000);
+            if (shouldHideTimeline()) {
+                wait_id = setTimeout(hideTimeline, 2000);
+            }
 
             $('.timeline-point-label').removeClass('current');
             console.log($('#timeline-label-' + date).addClass('current'), date, '#timeline-point-' + date);
@@ -403,11 +425,15 @@
 
     $(document).ready(function () {
         $('#timeline-wrap').bind('mouseover', function () {
-            clearInterval(wait_id);
-            wait_id = setTimeout(showTimeline, 500);
+            if (shouldHideTimeline() || !currentPage.timeline) {
+                clearInterval(wait_id);
+                wait_id = setTimeout(showTimeline, 500);
+            }
         }).bind('mouseout', function () {
-            clearInterval(wait_id);
-            wait_id = setTimeout(hideTimeline, 5000);
+            if (shouldHideTimeline() || !currentPage.timeline) {
+                clearInterval(wait_id);
+                wait_id = setTimeout(hideTimeline, 2000);
+            }
         }).bind('click tap', function () {
             showTimeline();
         });
