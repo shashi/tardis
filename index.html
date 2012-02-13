@@ -12,11 +12,11 @@
 <body>
 <div id="wrap">
     <div class="grid-wrap" id="page-wrap">
-        <div id="prev-page">&larr;</div>
+        <div id="prev-page">&lt;</div>
         <div id="page" class="grid">
             <div id="page-inner"></div>
         </div>
-        <div id="next-page">&rarr;</div>
+        <div id="next-page">&gt;</div>
         <div id="seeker"></div>
     </div>
     <div id="timeline-wrap">
@@ -53,7 +53,7 @@
         $('#footer').css('bottom', n - t['top'] - t.height);
     }
 
-    $(window).live('resize', adjustPagePosition);
+    window.onresize = adjustPagePosition;
     adjustPagePosition();
 
     document.loadTimeline(function () {

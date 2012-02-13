@@ -213,7 +213,7 @@
 
     function shouldHideTimeline()
     {
-        return $('#timeline-wrap').offset()['top'] - $('#footer').offset()['top']- $('#footer').offset().height < 0;
+        return $('#timeline-wrap').offset()['top'] - $('#footer').offset()['top']- $('#footer').offset().height < 70;
     }
 
     function hideTimeline(cb) {
@@ -223,7 +223,6 @@
         // adjust footer position
         try {
             var t_o = $('#timeline-wrap').offset();
-            alert(t_o.bottom);
             var t = t_o.top + -1*t_o.bottom + $('#footer').offset().top;
             if (t > 50) {
                $('#footer').css('margin-top', (t - 50) / 2);
@@ -237,6 +236,10 @@
     function showTimeline(cb) {
         $('#timeline-wrap').anim({'bottom': 0}, 0.3, 'ease', cb);
         $('#timeline').anim({opacity: 1});
+
+        if (shouldHideTimeline()) {
+            $('#footer').anim({opacity: 0});
+        }
     }
 
     function loadTimeline(cb) {
@@ -285,6 +288,7 @@
     function getYear(dt) {
         console.log(typeof dt);
         if (typeof(dt) == 'number' || typeof(dt) == 'string') {
+            if (dt == 'now') dt = new Date();
             dt = Date.parse(dt);
             if (isNaN(dt)) {
                 throw "Not cool. Could not parse date: " + dt;
@@ -328,11 +332,11 @@
             $('#timeline-lines').append(line);
     }
 
-    function reposition(date) {
+    function reposition(date, show) {
         if (typeof(date) == 'number' || typeof(date) == 'string') {
-            if ($('#timeline').data('current-year') == date) return;
+            if ($('#timeline').data('current-year') == date && !show) return;
             clearInterval(wait_id);
-            if (currentPage.timeline) {
+            if (currentPage.timeline && show) {
                 showTimeline();
             } else {
                 hideTimeline();

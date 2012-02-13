@@ -192,7 +192,9 @@ def parse(text):
     page_re = re.compile('^[P|p]age[\s\-]*[0-9]*\s*$', re.MULTILINE)
     text = sub_dates(text)
     subpages = [s.strip() for s in page_re.split(text)]
-    subpages.remove('')
+    try:
+        subpages.remove('')
+    except ValueError: pass
 
     html = ''
     i = 1

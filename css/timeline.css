@@ -23,7 +23,7 @@ body {
 #page-wrap {
     position: relative;
     height: 480px;
-    width: 960px;
+    width: 900px;
     margin: 0 auto;
 }
 
@@ -153,33 +153,34 @@ h3 {
 }
 
 #prev-page, #next-page {
-    font-family: monospace;
+    font-family: Coustard;
 }
 #prev-page {
     position: absolute;
-    left: 10px;
     top: 0;
+    left: -30px;
     text-align: left;
     font-size: 3em;
-    width: 100px;
-    height: 160px;
-    margin: 160px auto;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    margin-top: 200px;
     float: left;
-    color: #aaa;
+    color: #CCC;
     cursor: pointer;
     opacity: 0;
 }
 #next-page {
     position: absolute;
-    text-align: left;
-    right: 10px;
+    text-align: right;
+    right: -30px;
     top: 0;
-    color: #999;
+    color: #CCC;
     font-size: 4em;
-    width: 100px;
+    width: 30px;
     height: 30px;
     margin: auto;
-    margin-top: 180px;
+    margin-top: 190px;
     float: left;
     cursor: pointer;
     opacity: 0;
@@ -201,7 +202,7 @@ h3 {
 }
 
 #footer {
-    margin-top: 30px;
+    margin-top: 50px;
 }
 #footer .page-date {
     font-size: 21pt;
