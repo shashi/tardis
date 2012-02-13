@@ -56,12 +56,13 @@
     $(window).live('resize', adjustPagePosition);
     adjustPagePosition();
 
-    document.loadTimeline();
-    if (window.location.hash == '') {
-        window.location.hash = '#home/1';
-    } else {
-        document.loadHashUrl(window.location.hash);
-    }
+    document.loadTimeline(function () {
+        if (window.location.hash == '') {
+            window.location.hash = '#home/1';
+        } else {
+            document.loadHashUrl(window.location.hash);
+        }
+    });
   })(Zepto);
 </script>
 </body>
