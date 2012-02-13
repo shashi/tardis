@@ -305,3 +305,16 @@ h3 {
     position: relative;
     clear: both;
 }
+
+.cover-wrap {
+    width: 100%;
+    height: 100%;
+    display: table;
+}
+
+.cover-title {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 7em;
+}

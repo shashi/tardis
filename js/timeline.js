@@ -28,14 +28,12 @@
         var leafs = $('#page-inner').find('.subpage').length;
 
         $('#seeker').empty();
-        for (var i=1; i<=leafs; i++) {
-            var href = '#' + data.slug + '/' + i
-            var dot = $('<a class="carousel-dot" href="' + href + '">&middot;</a>')
-            $('#seeker').append(dot);
-        }
-
-        if (shouldHideTimeline()) {
-            $('#footer').css('opacity', 0);
+        if (leafs > 1) {
+            for (var i=1; i<=leafs; i++) {
+                var href = '#' + data.slug + '/' + i
+                var dot = $('<a class="carousel-dot" href="' + href + '">&middot;</a>')
+                $('#seeker').append(dot);
+            }
         }
 
     }
@@ -112,7 +110,7 @@
                     render(data);
                     if (typeof(leaf) != 'undefined') {
                         if (leaf == 'last') loadLeaf($('#page .subpage').length);
-                        else loadLeaf(leaf, true);
+                        else loadLeaf(leaf, undefined, true);
                     }
 
                 },
@@ -165,7 +163,7 @@
         window.location.hash = $('#page').data('loaded') + '/' + currentLeaf;
     }
 
-    function loadLeaf(id, noanim) {
+    function loadLeaf(id, cb, noanim) {
         var new_left = -900 * (id-1);
         if (id > $('#page-inner .subpage').length) {
             console.log('Beyond available slides');
@@ -179,7 +177,7 @@
         if (noanim) {
             $('#page-inner').css('left', new_left);
         } else {
-            $('#page-inner').anim({left: new_left});
+            $('#page-inner').anim({left: new_left}, 0.3, 'ease', cb);
         }
         currentLeaf = id;
         $('#seeker').find('.carousel-dot').removeClass('current').eq(id-1)
@@ -191,10 +189,10 @@
         if (leaf_date.length == 0) {
             var y = getYear($('#page').data('date'));
             console.log('current_page', $('#page'), y);
-            reposition(y);
+            reposition(y, id==1);
         } else {
             var y = getYear(leaf_date.find('span.date').attr('data-start'));
-            reposition(y);
+            reposition(y, id==1);
         }
 
         // first and last slides hide arrows
