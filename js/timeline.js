@@ -9,10 +9,13 @@
         timelineScale = 1;
     var wait_id;
 
+    function nothing() {
+    }
+
     function render(data) {
         var title = $('<h2 class="page-title"></h2>').html(data.title),
             start = $('<span class="page-start"></span>').text(getYear(data.from)),
-            to_dt = (typeof data.to == 'string') ? getYear(data.to) : 'today',
+            to_dt = getYear(data.to);
             end   = $('<span class="page-end"></span>').text(to_dt),
             sep   = $('<span class="year-seperator"> &ndash; </span>'),
             wrap  = $('<div class="page-date"></div>').append(start).append(sep).append(end);

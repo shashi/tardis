@@ -111,10 +111,12 @@ def thumbs(p):
         matches = thumbs_re.match(l)
         if matches != None:
             scan_thumbs = True
+            new_lines.append('<div class="thumb-row">')
             continue
-        elif l.strip() == ')':
+        elif scan_thumbs and l.strip() == ')':
             if len(imgs) > 0:
                 new_lines.append(imgs)
+            new_lines.append('</div>')
             scan_thumbs = False
             continue
 
@@ -125,10 +127,10 @@ def thumbs(p):
                 images.append(pic)
                 imgs += markup
             else:
-                imgs += '<br style="clear:both">'
+                imgs += '</div><div class="thumb-row">'
         else:
             new_lines.append(l)
-    return '\n'.join(new_lines), images
+    return  '\n'.join(new_lines), images
 
 
 def boxes(p):

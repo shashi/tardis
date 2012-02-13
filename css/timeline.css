@@ -1,5 +1,5 @@
 body {
-	font-family: Coustard, Georgia, Verdana;
+	font-family:  'Sorts Mill Goudy', Coustard, Georgia, Verdana;
     background: -webkit-gradient(radial, center center, 0, center center, 400,
                                from(rgb(254, 254, 254)),
                                to(rgb(239, 239, 239)));
@@ -23,12 +23,13 @@ body {
 #page-wrap {
     position: relative;
     height: 480px;
-    width: 100%;
+    width: 960px;
+    margin: 0 auto;
 }
 
 .grid {
     height: 480px;
-    width: 960px;
+    width: 900px;
 }
 
 #page {
@@ -42,21 +43,19 @@ body {
 }
 
 em {
-	font-family: 'Gochi Hand';
-    font-size: 1.2em;
 }
 
 #timeline-labels {
-	margin-top: 25px;
-	font-size: 35px;
+	margin-top: 15px;
+	font-size: 2.6em;
 }
 
 #timeline-wrap {
 	box-shadow: 0 0 8pt #000;
 	position: fixed;
-	bottom: 0;
+	bottom: -90px;
 	left: 0;
-	height: 120px;
+	height: 100px;
 	background-color: #222;
 	width: 100%;
 }
@@ -65,7 +64,6 @@ em {
     width: 100%;
     height: 90px;
     text-align: center;
-    opacity: 0;
 }
 
 .timeline-point-label {
@@ -129,24 +127,23 @@ h3 {
 .subpage, .filler_leaf {
     display: inline;
     height: 480px;
-    width: 960px;
+    width: 900px;
     position: relative;
     float: left;
 }
 
 #seeker {
     width: 100%;
-    position: absolute;
-    margin-top: -40px;
+    margin-top: 0px;
     text-align: center;
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .carousel-dot {
     color: #999;
     font-weight: bold;
     text-decoration: none;
-    padding:0 10px;
+    padding:0 8px;
     cursor: pointer;
 }
 
@@ -154,12 +151,16 @@ h3 {
     color: #333;
 	text-shadow: #000 0px 0px 5px;
 }
+
+#prev-page, #next-page {
+    font-family: monospace;
+}
 #prev-page {
     position: absolute;
     left: 10px;
     top: 0;
     text-align: left;
-    font-size: 5em;
+    font-size: 3em;
     width: 100px;
     height: 160px;
     margin: 160px auto;
@@ -170,14 +171,15 @@ h3 {
 }
 #next-page {
     position: absolute;
-    text-align: right;
+    text-align: left;
     right: 10px;
     top: 0;
     color: #999;
-    font-size: 8em;
+    font-size: 4em;
     width: 100px;
-    height: 160px;
-    margin: 160px auto;
+    height: 30px;
+    margin: auto;
+    margin-top: 180px;
     float: left;
     cursor: pointer;
     opacity: 0;
@@ -198,14 +200,20 @@ h3 {
 .text-shadow {
 }
 
-
-#footer .page-date {
-    font-family: Georgia, garamond, 'Podkova';
-    font-size: 21pt;
+#footer {
+    margin-top: 20px;
 }
+#footer .page-date {
+    font-size: 21pt;
+    color: #777;
+    letter-spacing: 5pt;
+    font-family: 'EB Garamond';
+}
+
 #footer h2 {
-    font-family: Georgia, garamond, 'Podkova';
-    font-size: 26pt;
+    font-family: 'Special Elite';
+    font-weight: bold;
+    font-size: 3em;
     margin-top: 10px;
     margin-bottom: 0px;
 }
@@ -215,12 +223,13 @@ h3 {
 }
 
 .thumb {
-    padding: 3px;
+    padding: 2px;
     float: left;
-    display: block;
+    border: 1px #999 solid;
+/*    box-shadow: 0px 0px 3px #000; */
+    margin: 2px;
     cursor: pointer;
 }
-
 .cover {
     position: fixed;
     display: none;
@@ -258,7 +267,8 @@ h3 {
 .thickbox-text {
     height: 40px;
     padding: 5px;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    font-family: 'Special Elite';
     text-align: center;
     vertical-align: middle;
     width: 100%;
@@ -285,6 +295,12 @@ h3 {
     color: white;
     cursor: pointer;
 }
+
 .thickbox-close:hover {
 	box-shadow: 0 0 8px #000;
+}
+
+.thumb-row {
+    position: relative;
+    clear: both;
 }
