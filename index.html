@@ -45,8 +45,8 @@
     // adjust vertical positioning
     function adjustPagePosition() {
         var available = $('#timeline').offset().top;
-        if (available>490) {
-            $('#page-wrap').css('margin-top', available / 2 - 250);
+        if (available>540) {
+            $('#page-wrap').css('margin-top', available / 2 - 340);
         }
         var t = $('#page').offset(), n = $('#timeline-wrap').offset()['top'];
         console.log(n, t['top'], t.height - 100);
