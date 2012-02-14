@@ -245,12 +245,18 @@ def process_page(fn):
         return page
 
 pg = sorted(os.listdir('_pages/'))
-print 'Found', len(pg), 'pages:'
-print '\n'.join(pg)
+filtered = []
+for p in pg:
+    if p[0] == '.' or p[-1] == '~':
+        continue
+    filtered.append(p)
+
+print 'Found', len(filtered), 'pages:'
+print '\n'.join(filtered)
 
 pages = []
 
-for fn in pg:
+for fn in filtered:
     pages.append(process_page(fn))
 i=0
 cnt = len(pages)
