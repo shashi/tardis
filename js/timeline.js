@@ -6,6 +6,7 @@
         currentPage = {'pics': [], 'captions': {}}
         yearSpacing = 300,
         currentPos = 0,
+        currentImg = undefined,
         timelineScale = 1;
     var wait_id;
 
@@ -128,15 +129,18 @@
             });
     }
 
-    function getPic(thumb, pics) {
+    function getPic(thumb, pics, offset) {
+        if (typeof(offset) != 'number') offset=0;
         for (p in pics) {
-            if (pics[p].thumb[0] == thumb) return pics[p]
+            if (pics[p].thumb[0] == thumb) return pics[Number(p)+offset]
         }
-        return null;
+        return undefined;
     }
 
-    function showBigPic(thumb, back) {
-        var pic = getPic(thumb, currentPage.pics);
+    function showBigPic(thumb, back, offset) {
+        var pic = getPic(thumb, currentPage.pics, offset);
+        console.log(thumb);
+        console.log(currentPage.pics);
         console.log(pic);
 
         var width = pic.original[1], height = pic.original[2],
@@ -155,6 +159,7 @@
                 .attr('src', pic.original[0])
         $('.cover .thickbox-center').empty().append(img);
         $('.cover').show().anim({opacity:1});
+        $('.thickbox').data('thumb', thumb);
 
         if (typeof(back) == 'string') {
             $('.cover').data('back', back);
@@ -185,7 +190,7 @@
         if (noanim) {
             $('#page-inner').css('left', new_left);
         } else {
-            $('#page-inner').anim({left: new_left}, 0.3, 'ease', cb);
+            $('#page-inner').anim({left: new_left}, 0.4, 'ease', cb);
         }
         currentLeaf = id;
         $('#seeker').find('.carousel-dot').removeClass('current').eq(id-1)
@@ -420,6 +425,30 @@
         loadPage(url[0], url[1]);
     }
 
+    function getPicUrl(slug, thumb) {
+        var _thumb = thumb.replace('thumbnails/', '');
+        return '#' +slug + '/pic:' + _thumb;
+    }
+
+    function prevPicture() {
+        try {
+            var cur = $('.thickbox').data('thumb'), slug = $('#page').data('loaded');
+            window.location.hash = getPicUrl(slug, getPic(cur, currentPage.pics, -1).thumb[0]);
+        } catch (e) {
+            console.log("At the first image.");
+            // orly?
+        }
+    }
+
+    function nextPicture() {
+        try {
+            var cur = $('.thickbox').data('thumb'), slug = $('#page').data('loaded');
+            window.location.hash = getPicUrl(slug, getPic(cur, currentPage.pics, 1).thumb[0]);
+        } catch (e) {
+            console.log("At the end of images");
+        }
+    }
+
     $(window).bind('hashchange', function (e) {
         console.log(e);
         loadHashUrl(e.newURL, e.oldURL);
@@ -456,9 +485,10 @@
             prevLeaf();
         });
         $('img.thumb').live('click tap', function () {
-            var slug = $('#page').data('loaded');
-            window.location.hash = '#' +slug 
-                    + '/pic:' + $(this).attr('src').replace('thumbnails/', '');
+            var slug = $('#page').data('loaded'),
+                thumb = $(this).attr('src');
+            window.location.hash = getPicUrl(slug, thumb);
+            currentImg = thumb;
         });
         $('.thickbox-close').live('click tap', function () {
             hideCover();
@@ -474,9 +504,11 @@
                     break;
                 case 37:
                     // prev image
+                    prevPicture();
                     break;
                 case 39:
                     // next image
+                    nextPicture();
                     break;
                 }
                 return;
