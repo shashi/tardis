@@ -26,7 +26,7 @@ def get_slug(fn):
 
 def box_div(dimensions, style):
     try:
-        x, y, height, width = [float(i) for i in re.split(r'[\s,]+', dimensions.strip())]
+        x, y, width, height = [float(i) for i in re.split(r'[\s,]+', dimensions.strip())]
     except:
         print 'Wrongly formatted box(%s)' % dimensions
         raise
@@ -118,6 +118,7 @@ def thumbs(p):
                 new_lines.append(imgs)
             new_lines.append('</div>')
             scan_thumbs = False
+            imgs = ''
             continue
 
         if scan_thumbs:
