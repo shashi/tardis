@@ -21,7 +21,11 @@
             sep   = $('<span class="year-seperator"> &ndash; </span>'),
             wrap  = $('<div class="page-date"></div>').append(start).append(sep).append(end);
 
-        $('#footer').empty().append(wrap).append(title);
+        if (data.title) {
+            $('#footer').empty().append(wrap).append(title);
+        } else {
+            $('#footer').empty();
+        }
 
         $('#page-inner').css('left', 0);
         currentLeaf = 1;
