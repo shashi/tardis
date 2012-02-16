@@ -2,10 +2,29 @@ body {
 	font-family:  'Sorts Mill Goudy', Coustard, Georgia, Verdana;
     background: -webkit-gradient(radial, center center, 0, center center, 400,
                                from(rgb(254, 254, 254)),
-                               to(rgb(239, 239, 239)));
+                               to(rgb(255, 252, 235)));
+    background: -moz-gradient(radial, center center, 0, center center, 400,
+                               from(rgb(254, 254, 254)),
+                               to(rgb(255, 255, 235)));
+    background: -moz-gradient(radial, center center, 0, center center, 400,
+                               from(#fefefe),
+                               to(#ffffef));
 	font-size: 87.5%;
 	position: relative;
 	color: #222;
+}
+
+a {
+    color: #9a9;
+    text-decoration: none;
+}
+
+a:hover, a:visited:hover {
+    color: #656;
+}
+
+a:visited {
+    color: #898;
 }
 
 .point {
@@ -64,6 +83,10 @@ em {
     width: 100%;
     height: 90px;
     text-align: center;
+}
+
+#footer h2 {
+    color: #444;
 }
 
 .timeline-point-label {
@@ -302,7 +325,6 @@ h3 {
 }
 
 .thumb-row {
-    position: relative;
     clear: both;
 }
 
@@ -313,8 +335,50 @@ h3 {
 }
 
 .cover-title {
-    display: table-cell;
     vertical-align: middle;
     text-align: center;
-    font-size: 7em;
+    font-family: 'Tangerine';
+    font-weight: bold;
+    font-size: 140px;
+    letter-spacing: -6px;
+    width: 100%;
+    margin-top: 120px;
+}
+
+.cover-tagline {
+    margin-top: 20px;
+    text-align: center;
+    color: #999;
+    font-size: 40px;
+    width: 100%;
+    font-family: 'Special Elite';
+    text-transform: lowercase;
+}
+
+.cover-more {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    font-family: Podkova;
+    font-size: 20px;
+    color: #bbb;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+.box {
+    font-size: 1.1em;
+    text-align: left;
+    overflow: hidden;
+}
+
+.box h3 {
+    font-size: 1.5em;
+    color: #444;
+    margin : 0;
+    letter-spacing: -1px;
+}
+
+.thumb-row {
+    text-align: justify;
 }
