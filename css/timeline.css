@@ -1,5 +1,5 @@
 body {
-	font-family:  'Sorts Mill Goudy', Coustard, Georgia, Verdana;
+	font-family: Coustard, Georgia, Verdana;
     background: -webkit-gradient(radial, center center, 0, center center, 400,
                                from(rgb(254, 254, 254)),
                                to(rgb(255, 252, 235)));
@@ -139,6 +139,7 @@ h3 {
 }
 
 .box {
+    font-family: 'EB Garamond';
     position: absolute; /* relative to the grid */
 }
 #page-inner {
@@ -157,7 +158,7 @@ h3 {
 
 #seeker {
     width: 100%;
-    margin-top: 5px;
+    margin-top: 15px;
     text-align: center;
     font-size: 25px;
 }
@@ -338,7 +339,6 @@ h3 {
     vertical-align: middle;
     text-align: center;
     font-family: 'Tangerine';
-    font-weight: bold;
     font-size: 140px;
     letter-spacing: -6px;
     width: 100%;
