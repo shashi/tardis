@@ -74,8 +74,6 @@ def thumbnail(spec):
 
     w, h = int(w), int(h)
 
-    print "    resizing %s to (%sx%s)" % (img, w, h)
-
     try:
         os.makedirs('thumbnails/'+'/'.join(img.split('/')[:-1]))
     except:
@@ -84,15 +82,22 @@ def thumbnail(spec):
     parts = img.split('.')
     thumb_name = 'thumbnails/' + '.'.join(parts[:-1])+'_%d_%d.' % (w, h)+parts[-1]
 
-    thumb_file = open(thumb_name, 'w')
-                # resample and resize
-    thumb_data = full_scale.resize((w, h), 1)
-    thumb_data.save(thumb_file)
+    try:
+        mod_time = os.stat(thumb_name).st_mtime
+        orig_time = os.stat('pictures/' + img).st_mtime
+        if (mod_time < orig_time):
+            raise "Been modified"
+    except:
+        print "    resizing %s to (%sx%s)" % (img, w, h)
+        thumb_file = open(thumb_name, 'w')
+                    # resample and resize
+        thumb_data = full_scale.resize((w, h), 1)
+        thumb_data.save(thumb_file)
     w, h = str(w), str(h)
 
     pic = {'thumb': [thumb_name, w, h], 'original': ['pictures/' + img, o_w, o_h]}
 
-    return '<img class="thumb" "width="%s" height="%s" src="%s">' % (w,h,thumb_name), pic
+    return '<img class="thumb" width="%s" height="%s" src="%s">' % (w,h,thumb_name), pic
 
 def thumbs(p):
     thumbs_re = re.compile('^\s*thumbnails\(\s*$')
