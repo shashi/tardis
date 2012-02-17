@@ -257,6 +257,21 @@ for p in pg:
         continue
     filtered.append(p)
 
+changed = False
+for fn in filtered:
+    try:
+        source_time = os.stat('_pages/%s' %fn).st_mtime
+        slug = fn.split('/')[-1].split('-')[1].split('.')[0]
+        mod_time = os.stat('pages/%s.json' % slug).st_mtime
+        if (mod_time < source_time):
+            raise "Been modified"
+    except:
+        changed = True
+        break
+if not changed:
+    print "Nothing to do."
+    exit(0)
+
 print 'Found', len(filtered), 'pages:'
 print '\n'.join(filtered)
 
