@@ -382,3 +382,24 @@ h3 {
 .thumb-row {
     text-align: justify;
 }
+
+a#inci-banner {
+    position: fixed;
+    display: block;
+    z-index: 0;
+    left: 10px;
+    background: url(img/inci_banner.png);
+    width: 90px;
+    height: 300px;
+    top: 25%;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    border: none;
+}
+
+#inci-banner:hover {
+    opacity: 1;
+}
