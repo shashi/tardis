@@ -1,0 +1,18 @@
+title: ''
+from: 1960
+timeline: false
+to:   now
+---
+<div class="cover-wrap">
+    <div class="cover-title">
+        Down Memory Lane
+    </div>
+    <div class="cover-tagline">
+        The Spacetime of <a href="http://nitk.ac.in">NITK Surathkal</a>
+    </div>
+    <div class="cover-more">
+       { InciCreative | <a href="#team">team</a> | <a href="http://incident.in">Incident '12</a> }
+    </div>
+
+</div>
+

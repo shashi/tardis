@@ -1,0 +1,40 @@
+title: ''
+from: 2012
+to: 2012
+timeline: false
+next: null
+prev: null
+---
+
+page
+box(0 0 15 8) text-align:center;
+<style>
+.team-title {
+    margin: 10px;
+}
+.people em {
+    color: #999;
+}
+</style>
+<h1 class="team-title">Team</h1>
+box(0 1 15 8) text-align: center;
+<span class="people" style="font-size: 1.2em">
+Aashranth Bommakanti -- _TextGod_
+Achu G. B. -- _Ninja_
+Arka Rai Chaudhuri -- _Bro_
+Arunabha Chatterjee -- _TextDemiGod_
+Elza Mathew -- _Cap'n_
+Pranav Ram -- _P-ram_
+Shashi Gowda -- _WebMonkey_
+Siddhartha R. Thota -- _leGIMP_
+Varun Rao -- _The Visionary_
+
+And the we-don't-know-how-many fine photographers
+whose work made all this possible.
+
+If you have anything valuable to add to the collection,
+please send it in to <a href="mailto:achugb@gmail.com">achugb@gmail.com</a>
+
+</span>
+.
+.

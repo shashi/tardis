@@ -1,0 +1,64 @@
+title: Bokeh
+from: 2000
+to: 2008
+---
+
+Page 1
+
+box(0 0 7 4) text-align:left;
+<h3>Blending sports with culture</h3>
+Years before the all-India tournaments would be conceived and championship
+trophies be brought to Surathkal, sports became an integral part of the cultural
+fest. Poolsplash, basketball and karate started to take centrestage, vying for space
+with beautifully executed traditional dances and concerts. INCIDENT themes were
+soon to fire common imagination, as the past merged seamlessly with the future.
+.
+
+box(0 3 7 5)
+thumbnails(
+bokeh_page_1/IMG_0166.JPG 410 auto
+)
+.
+
+box(7.15 4 8 4)
+thumbnails(
+bokeh_page_1/IMG_0169.JPG 220 auto
+bokeh_page_1/IMG_0167.JPG 220 auto
+)
+.
+
+box(7.15 1.2 8 2.8)
+thumbnails( 
+bokeh_page_1/IMG_0173.JPG 220 149
+bokeh_page_1/IMG_0174.JPG 220 149
+)
+.
+Page 2
+
+box(0 6.85 15 2) text-align:center;
+<h3>The quest for perfection</h3>
+The college magazine wasn’t the only instrument in the quest for perfection; after
+the Karnatakian became the ‘Vitruvian’ and KREC became NITK, every student
+body in college had a new goal- to push their limits and deliver the best on all
+fronts.
+.
+
+box(0 0 7.8 7)
+thumbnails(
+2004/IMG_0200.JPG 288 389
+)
+.
+
+box(5 0 7.8 7)
+thumbnails(
+2004/IMG_0201.JPG 288 389
+)
+.
+
+box(10 0 7.8 7)
+thumbnails(
+2004/IMG_0202.JPG 288 389
+)
+.
+
+
