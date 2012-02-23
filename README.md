@@ -2,6 +2,8 @@
 
 -- The Spacetime of NITK Surathkal
 
+A compilation of rare pictures since the inception of NITK presented using the new web. The code-base is called _tardis_.
+
 ## Content -- Authoring
 
 The pictures are in the directory named `pictures` 
@@ -10,10 +12,10 @@ _Note: keep one of the files in `_pages/` open for reference as you read this._
 
 ### Eras, pages and boxes
 * An era is a grouping of years with some similarity. Currently there are 4 of them:
-** Polaroid: 1960s
-** 35mm: 1989-2000
-** Bokeh: 2001-2008
-** In Gold: 2009-2012
+    * Polaroid: 1960s
+    * 35mm: 1989-2000
+    * Bokeh: 2001-2008
+    * In Gold: 2009-2012
 * This classification was based on the amount of graphics and info we had for
   each of these years. An ideal era would span just one year and would have a
   4 digit numeric name. This is the ultimate goal, get enough information and
@@ -29,28 +31,28 @@ _Note: keep one of the files in `_pages/` open for reference as you read this._
 * All the information required to render one full era in the browser is contained
   in a file inside `_pages/` directory. An example name for the file looks like `03-bokeh`. Here the part before the `-` is the number used for ordering of the era among others. This defines which era is `next` or `prev`ious on the list in the final browser rendition of the site.
 * The file contains:
-** YAML (Yet Another Markup Language) meta data header. This defines several settings associated with the era file. An example header is shown below.
+    * YAML (Yet Another Markup Language) meta data header. This defines several settings associated with the era file. An example header is shown below.
     title: Wrought In Gold
     from:  2009
     to: 2011
     next: null
     prev: bokeh
 
-** The idea is simple: it is a list of option-value pairs in the format `option: value`. The options available and their possible values are:
-*** `title` -- The title of the page
-*** `from`  -- 4-digit numeric year marking the start of the era (note: this gets centered in the timeline when you open the era)
-*** `to`  -- 4-digit numeric year marking the end of the era
-*** `next` -- (optional: this is determined using the numbering in the era file name) the slug (see the bullet point about the file name) of the era you want to indicate as coming next to this one.
-*** `prev` -- (optional: see above) indicates the previous era
-*** `timeline` -- (optional) whether to show the timeline while viewing this era. Default value is true, setting it to false help in writing pages like the home page where you wish to hide the timeline since showing it has no relevence to the contents of the page.
+    * The idea is simple: it is a list of option-value pairs in the format `option: value`. The options available and their possible values are:
+        * `title` -- The title of the page
+        * `from`  -- 4-digit numeric year marking the start of the era (note: this gets centered in the timeline when you open the era)
+        * `to`  -- 4-digit numeric year marking the end of the era
+        * `next` -- (optional: this is determined using the numbering in the era file name) the slug (see the bullet point about the file name) of the era you want to indicate as coming next to this one.
+        * `prev` -- (optional: see above) indicates the previous era
+        * `timeline` -- (optional) whether to show the timeline while viewing this era. Default value is true, setting it to false help in writing pages like the home page where you wish to hide the timeline since showing it has no relevence to the contents of the page.
 
-** the YAML meta data is always followed by three hiphens `---` as one single line. This marks the end of the meta data and beginning of the body of the era.
-** The body contains:
-*** Pages, which may contain
-**** Boxes, which may contain
-***** text
-***** sets of thumbnails
-** These are explained in detail below.
+    * the YAML meta data is always followed by three hiphens `---` as one single line. This marks the end of the meta data and beginning of the body of the era.
+    * The body contains:
+        * Pages, which may contain
+            * Boxes, which may contain
+               * text
+               * sets of thumbnails
+    * These are explained in detail below.
 
 #### A page
 * A single page can be shown on the web page at any given time.
@@ -104,10 +106,10 @@ When you have pictures that you want to scale down or up and arrange in rows to 
 * Notice that these thumbnails are put inside a box.
 * each line after the line `thumbnails(` is either a blank line or a line containing 3 fields seperated by a space:
         file_path width height
-** File path: the path to the file (case sensitive) relative to the `pictures/` directory.
-** Width: width in pixels for the image. (FIXME: Should you make this go with the grid?)
-** Height: height in pixels.
-*** note: specifying `auto` as the width or height automatically calculates the height or width so as to not loose the height-width ratio of the image. Setting both as auto results in an error.
+    * File path: the path to the file (case sensitive) relative to the `pictures/` directory.
+    * Width: width in pixels for the image. (FIXME: Should you make this go with the grid?)
+    * Height: height in pixels.
+        * note: specifying `auto` as the width or height automatically calculates the height or width so as to not loose the height-width ratio of the image. Setting both as auto results in an error.
 
 ### Compiling
 
