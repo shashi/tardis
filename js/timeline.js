@@ -56,7 +56,6 @@
                     $('#page-inner,#footer').anim({opacity:0},.3,'ease-out', function () {
                         $('#page-inner').css('left', 0);
                         window.location.hash = '#' + next + '/1';
-                        $('#page-inner,#footer').anim({opacity:1},.6,'ease-in');
                     });
                 } else {
                     window.location.hash = '#' + next + '/1';
@@ -125,7 +124,7 @@
                         if (leaf == 'last') loadLeaf($('#page .subpage').length);
                         else loadLeaf(leaf, undefined, true);
                     }
-
+                    $('#page-inner,#footer').anim({opacity:1},.6,'ease-in');
                 },
                 error: function () {
                     alert('Fail happened while loading #' +slug);
@@ -270,6 +269,7 @@
                 if (shouldHideTimeline()) {
                     setTimeout(hideTimeline, 2000);
                 }
+                $('#page-inner,#footer').anim({opacity:1},.6,'ease-in');
             },
             error: function () {
                 console.log('[ERROR] Fail happened while loading timeline');
@@ -293,6 +293,7 @@
             success: function(data) {
                 currentPage.captions[slug] = data;
                 callback();
+                $('#page-inner,#footer').anim({opacity:1},.6,'ease-in');
             },
             error: function () {
                 console.log('No captions for images in ' + slug);
